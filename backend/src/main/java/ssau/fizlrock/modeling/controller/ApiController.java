@@ -1,5 +1,6 @@
 package ssau.fizlrock.modeling.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import ssau.fizlrock.modeling.core.*;
 public class ApiController {
 
   @GetMapping("/api/report")
+  @CrossOrigin(origins = "*") 
   Mono<ModelingReport> homePage(
       @RequestParam(required = true) Long valueCount,
       @RequestParam(required = true) Long rangeCount,

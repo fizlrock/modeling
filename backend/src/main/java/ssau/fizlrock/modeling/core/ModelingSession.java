@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.DoubleSupplier;
 import java.util.function.LongToDoubleFunction;
@@ -161,10 +160,7 @@ public class ModelingSession {
 
     return LongStream.range(l, r + 1)
         .boxed()
-        .flatMap(i -> Stream.of(
-            new Cords(i, (double) dict.getOrDefault(i, 0l) / synt_values.length),
-            new Cords(i, (double) dict.getOrDefault(i+1, 0l) / synt_values.length)
-          ))
+        .map(i -> new Cords(i, (double) dict.getOrDefault(i, 0l) / synt_values.length))
         .collect(Collectors.toList());
   }
 
