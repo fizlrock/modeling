@@ -30,15 +30,16 @@ public class Lab2 {
     var st = new NoStatPuasson(lambdaFunction);
     st.waitNEvents(eventNeed);
 
-    if (st.time > Integer.MAX_VALUE)
-      throw new IllegalStateException();
+    // if (st.time > Integer.MAX_VALUE)
+    //   throw new IllegalStateException();
 
-    var event_chart = new ArrayList<Long>();
-    event_chart.add(st.history.getFirst());
-    for (int i = 1; i < st.history.size(); i++)
-      event_chart.add(i, st.history.get(i) + event_chart.get(i - 1));
+    // var event_chart = new ArrayList<Long>();
+    // event_chart.add(st.history.getFirst());
+    // for (int i = 1; i < st.history.size(); i++)
+    //   event_chart.add(i, st.history.get(i) + event_chart.get(i - 1));
 
-    return new Report(simulationTimes, average, event_chart);
+    return new Report(simulationTimes, average, st.history);
+    // return new Report(simulationTimes, average, event_chart);
 
   }
 
