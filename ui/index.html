@@ -1,137 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 
 <head>
-  <title>Моделирование СВ</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script> src = "./script.js"</script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>МИВС</title>
+  <link href="/src/assets/style.css" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <script type="module" src="/src/main.ts"></script>
 </head>
 
 <body>
-
-  <p>Лабораторная работа №1</p>
-
-  <!-- <button title="Моделировать" /> -->
-  <div>
-    <label for="sequenceSize">Размер выборки</label>
-    <input type="number" id="sequenceSize" name="sequenceSize" required min=1 value="1000">
-    </input>
-  </div>
-
-  <div>
-    <label for="intervalCount">Число интервалов</label>
-    <input type="number" id="intervalCount" name="intervalCount" required min=2 max=20 value="11">
-    </input>
-  </div>
-
-  <div>
-    <label for="alpha">Альфа (матожидание)</label>
-    <input type="number" id="alpha" name="alpha" required min=0.0 value="4.0">
-    </input>
-  </div>
-
-  <div>
-    <button onclick="draw()" style="width: 100px; height: 40px;" id="startModelingButton">
-      Моделировать
-    </button>
-  </div>
-
-
-  <p id="hiP"></p>
-
-  <canvas id="myChart"></canvas>
-
-
-  <script>
-
-    var ctx = document.getElementById('myChart').getContext('2d');
-
-    var myChart = new Chart(ctx, {
-      type: 'line',
-      options: {
-        plugins: {
-          title: {
-            display: true,
-            text: 'Функция плотности распределения вероятностей'
-          }
-        },
-        scales: {
-          y: {
-            title: {
-              display: true,
-              text: 'f(x)'
-            },
-            beginAtZero: true,
-          },
-          x: {
-            title: {
-              display: true,
-              text: 'x'
-            },
-            beginAtZero: true,
-          }
-        }
-      }
-    });
-
-    function draw() {
-      const sequenceSize = document.getElementById('sequenceSize').value
-      const intervalCount = document.getElementById('intervalCount').value
-      const alpha = document.getElementById('alpha').value
-      const hiP = document.getElementById('hiP')
-
-
-
-      fetch(`http://localhost:8080/api/report?valueCount=${sequenceSize}&rangeCount=${intervalCount}&alpha=${alpha}`)
-        .then(
-          function (response) {
-            if (response.status !== 200) {
-              console.log('Looks like there was a problem. Status Code: ' +
-                response.status);
-              return;
-            }
-            // Examine the text in the response  
-            response.json().then(function (data) {
-              console.log(data)
-
-              myChart.data.datasets.pop();
-              myChart.data.datasets.pop();
-
-              myChart.data.labels = data.teorDensityDots.map(dot => dot.x)
-
-              const teor = {
-                type: 'line',
-                label: 'Теоретическая плотность',
-                data: data.teorDensityDots.map(dot => dot.y),
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-              }
-
-              const practice = {
-                type: 'bar',
-                label: 'Наблюдаемая плотность',
-                backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                ], data: data.realDensityDots.map(dot => dot.y),
-                fill: false,
-                tension: 0.1
-              }
-              hiP.innerHTML = `HI = ${data.hi}`;
-
-
-              myChart.data.datasets.push(teor)
-              myChart.data.datasets.push(practice)
-              myChart.update();
-            });
-          }
-        )
-        .catch(function (err) {
-          console.log('Fetch Error :-S', err);
-        });
-
-    }  </script>
+  <div id="app"></div>
+  <noscript>Enable JavaScript to run this application.</noscript>
 </body>
 
 </html>

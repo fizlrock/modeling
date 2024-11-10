@@ -1,4 +1,4 @@
-package ssau.fizlrock.modeling.core;
+package ssau.fizlrock.modeling.core.util;
 
 /**
  * Левый интервал включительно, правый нет

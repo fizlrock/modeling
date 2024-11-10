@@ -1,4 +1,4 @@
-package ssau.fizlrock.modeling.core;
+package ssau.fizlrock.modeling.core.modeling.rvgeneratorscore;
 
 /**
  * ModelingParams

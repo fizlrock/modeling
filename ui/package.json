@@ -1,0 +1,44 @@
+{
+  "name": "vue-spa-template",
+  "description": "Vue + Vite + TypeScript + ESLint + Prettier template for single-page applications",
+  "version": "1.4.2",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview --port 8080",
+    "check": "vue-tsc --noEmit && eslint --ext .ts,.tsx,.vue . && prettier -cu --ignore-path .gitignore .",
+    "lint": "eslint --ext .ts,.tsx,.vue .",
+    "fix": "eslint --fix --ext .ts,.tsx,.vue .",
+    "format": "prettier -cwu --ignore-path .gitignore ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/curegit/vue-spa-template.git"
+  },
+  "author": "curegit (https://github.com/curegit)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/curegit/vue-spa-template/issues"
+  },
+  "homepage": "https://github.com/curegit/vue-spa-template",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "chart.js": "^4.4.6",
+    "vue": "^3.5.0",
+    "vue-chartjs": "^5.3.2",
+    "vue-router": "^4.4.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.0",
+    "@vue/eslint-config-prettier": "^10.1.0",
+    "@vue/eslint-config-typescript": "^14.1.0",
+    "eslint": "^9.14.0",
+    "eslint-plugin-vue": "^9.30.0",
+    "prettier": "^3.3.0",
+    "typescript": "^5.6.0",
+    "vite": "^5.4.0",
+    "vue-tsc": "^2.1.0"
+  }
+}

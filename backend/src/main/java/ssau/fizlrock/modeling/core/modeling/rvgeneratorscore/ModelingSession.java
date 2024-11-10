@@ -1,4 +1,4 @@
-package ssau.fizlrock.modeling.core;
+package ssau.fizlrock.modeling.core.modeling.rvgeneratorscore;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -17,9 +17,15 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
+import lombok.extern.slf4j.Slf4j;
+import ssau.fizlrock.modeling.core.random.RandomValue;
+import ssau.fizlrock.modeling.core.util.Cords;
+import ssau.fizlrock.modeling.core.util.Range;
+
 /**
  * ModelingEngine
  */
+@Slf4j
 public class ModelingSession {
 
   class ValueToIntervalIndexF implements LongToIntFunction {
@@ -108,6 +114,9 @@ public class ModelingSession {
     filterRanges();
     valueToIndexFunction = new ValueToIntervalIndexF();
 
+    for (long i = 0; i < 50; i++)
+      log.info("distF {} -> {}", i, rv.densityFunction().applyAsDouble(i));
+
   }
 
   public ModelingReport run() {
@@ -135,7 +144,7 @@ public class ModelingSession {
         .collect(Collectors.toList());
 
     double hi = calcHi(realProbs);
-    System.out.println("HI:  " + hi);
+    // System.out.println("HI: " + hi);
 
     lastReport = ModelingReport.builder()
         .rv(rv)
@@ -175,7 +184,7 @@ public class ModelingSession {
   }
 
   private double calcHi(Range expRange, Range realRange) {
-    System.out.println("ModelingSession.calcHi()");
+    // System.out.println("ModelingSession.calcHi()");
     long n = params.valuesCount();
     long expN = (long) (expRange.prob() * n);
     long realN = (long) (realRange.prob() * n);
@@ -188,8 +197,8 @@ public class ModelingSession {
 
     long l = max(rv.scope().a(), expRanges.getFirst().b() - 5);
     long r = min(rv.scope().b(), expRanges.getLast().a() + 5);
-    System.out.println(l);
-    System.out.println(r);
+    // System.out.println(l);
+    // System.out.println(r);
 
     return LongStream.range(l, r + 1)
         .mapToObj(i -> new Cords(i, rv.densityFunction().applyAsDouble(i)))
@@ -209,6 +218,7 @@ public class ModelingSession {
    * @return
    */
   private void generateRangesForDiscrBeta() {
+    log.info("Разбиение интервала {} на {} отрезков", rv.scope(), params.rangeCount());
 
     double target_P = 1.0 / params.rangeCount();
 
@@ -219,12 +229,14 @@ public class ModelingSession {
         .toArray();
 
     List<Range> ranges = new ArrayList<>();
+    log.info("Получились точки: {}", points);
 
     for (int i = 0; i < points.length - 1; i += 1) {
       long l = points[i], r = points[i + 1];
       double p = rv.distributionFunction().applyAsDouble(r) - rv.distributionFunction().applyAsDouble(l);
       ranges.add(new Range(l, r, p));
     }
+    log.info("Получились отрезки: {}", ranges);
 
     this.expRanges = ranges;
 
