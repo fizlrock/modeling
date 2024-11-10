@@ -3,7 +3,6 @@ import { RouterView } from "vue-router";
 
 import HeaderPart from "./parts/HeaderPart.vue";
 import FooterPart from "./parts/FooterPart.vue";
-import LineChart from "./views/"
 </script>
 
 <template>

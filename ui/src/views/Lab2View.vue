@@ -91,7 +91,7 @@ export default {
     async fetchData() {
       try {
         console.log("Делаем запрос");
-        const response = await axios.get(`http://localhost:8080/api/lab2/22\?alpha=${this.alpha}`);
+        const response = await axios.get(` http://107.172.142.23:8080/api/lab2/22\?alpha=${this.alpha}`);
 
         this.data.simTime = response.data.averageSimulationTime;
         this.data.simulationTimes = response.data.simulationTimes;
